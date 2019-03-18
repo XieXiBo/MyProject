@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/login_regist_bg"
+    android:orientation="vertical"
+    tools:context=".activity.LoginActivity">
+
+    <EditText
+        android:id="@+id/phone_regist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="30dp"
+        android:background="@null"
+        android:drawableLeft="@mipmap/login_icon_phone"
+        android:drawableBottom="@drawable/edit_shape"
+        android:drawablePadding="10dp"
+        android:hint="手机号"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:textColorHint="#ffffff" />
+
+    <EditText
+        android:id="@+id/yzm_regist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="30dp"
+        android:background="@null"
+        android:drawableLeft="@mipmap/regist_icon_verification"
+        android:drawableBottom="@drawable/edit_shape"
+        android:drawablePadding="10dp"
+        android:hint="验证码"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:textColorHint="#ffffff" />
+
+    <EditText
+        android:id="@+id/pwd_regist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="30dp"
+        android:background="@null"
+        android:drawableLeft="@mipmap/login_icon_locki"
+        android:drawableRight="@mipmap/login_icon_eye"
+        android:drawableBottom="@drawable/edit_shape"
+        android:drawablePadding="10dp"
+        android:hint="登录密码"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:textColorHint="#ffffff" />
+
+
+    <Button
+        android:id="@+id/regist_regist"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="150dp"
+        android:background="@drawable/shape"
+        android:text="注册"
+        android:textColor="#ff5f71"
+        android:textSize="18sp" />
+</LinearLayout>

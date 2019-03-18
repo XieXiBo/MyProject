@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:leon="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@mipmap/mine_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="240dp"
+        android:background="@drawable/wode_shape"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/my_icon"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:src="@mipmap/ic_launcher_round"
+                app:civ_border_color="#FFFFFF"
+                app:civ_border_width="2dp" />
+
+            <TextView
+                android:id="@+id/my_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="小飞象"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+
+        <com.leon.lib.settingview.LSettingItem
+            android:id="@+id/my_information"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            leon:leftIcon="@mipmap/my_icon_information"
+            leon:leftText="个人资料" />
+
+        <com.leon.lib.settingview.LSettingItem
+            android:id="@+id/my_circle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            leon:leftIcon="@mipmap/my_icon_circle"
+            leon:leftText="我的圈子" />
+
+        <com.leon.lib.settingview.LSettingItem
+            android:id="@+id/my_foot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            leon:leftIcon="@mipmap/my_icon_foot"
+            leon:leftText="我的足迹" />
+
+        <com.leon.lib.settingview.LSettingItem
+            android:id="@+id/my_wallet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            leon:leftIcon="@mipmap/my_icon_wallet"
+            leon:leftText="我的钱包" />
+
+        <com.leon.lib.settingview.LSettingItem
+            android:id="@+id/my_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            leon:leftIcon="@mipmap/my_icon_address"
+            leon:leftText="我的收货地址" />
+    </LinearLayout>
+</LinearLayout>
