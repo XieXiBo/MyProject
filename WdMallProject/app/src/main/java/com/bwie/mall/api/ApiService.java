@@ -1,7 +1,7 @@
 package com.bwie.mall.api;
 
 import com.bwie.mall.bean.BannerBean;
-import com.bwie.mall.bean.DetailsBean;
+import com.bwie.mall.bean.ShopDetails;
 import com.bwie.mall.bean.GoodsBean;
 import com.bwie.mall.bean.LoginBean;
 import com.bwie.mall.bean.RegistBean;
@@ -58,5 +58,5 @@ public interface ApiService {
      * 商品详情
      */
     @GET(Api.DETAILS_URL)
-    Flowable<DetailsBean> getDetails(@Query("commodityId") String commodityId);
+    Flowable<ShopDetails> getDetails(@Query("commodityId") String commodityId);
 }

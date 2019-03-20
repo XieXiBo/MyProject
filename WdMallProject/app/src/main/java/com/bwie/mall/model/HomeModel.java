@@ -82,7 +82,7 @@ public class HomeModel {
                     @Override
                     public void onNext(SearchBean searchBean) {
                         List<SearchBean.ResultBean> result = searchBean.getResult();
-                        Log.i("xxx", "onNext: " + result.size());
+                      //  Log.i("xxx", "onNext: " + result.size());
                         if (searchResult != null) {
                             searchResult.onResult(result);
                         }

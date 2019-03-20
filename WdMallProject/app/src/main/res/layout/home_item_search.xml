@@ -10,22 +10,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
+        android:layout_gravity="center"
         app:cardBackgroundColor="#FFF"
         app:cardCornerRadius="10dp"
         app:cardElevation="8dp">
 
         <LinearLayout
+            android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:orientation="vertical">
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/img_item_search"
-                android:layout_width="200dp"
-                android:layout_height="240dp"
+                android:layout_width="180dp"
+                android:layout_height="220dp"
                 android:layout_gravity="center"
                 app:placeholderImage="@mipmap/ic_launcher_round"
-                app:roundedCornerRadius="20dp" />
+                app:roundedCornerRadius="5dp" />
 
             <TextView
                 android:id="@+id/title_item_search"
@@ -36,13 +39,26 @@
                 android:text="哈哈哈"
                 android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/price_item_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="444"
-                android:textColor="#fa723c" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/price_item_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_alignParentLeft="true"
+                    android:text="444"
+                    android:textColor="#fa723c" />
+                <TextView
+                    android:id="@+id/num_item_search"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="444"/>
+            </RelativeLayout>
 
         </LinearLayout>
 

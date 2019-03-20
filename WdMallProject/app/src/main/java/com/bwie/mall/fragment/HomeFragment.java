@@ -5,7 +5,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -48,6 +47,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
     private int page = 1;
     private ArrayList<SearchBean.ResultBean> resultBeans;
     private Handler handler = new Handler();
+
     @Override
     public int getFragmentLayout() {
         return R.layout.fragment_home;
@@ -111,7 +111,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
 
     @Override
     public void getSearchData(List<SearchBean.ResultBean> result) {
-        Log.i("xxx", "getSearchData: "+result.size());
+        // Log.i("xxx", "getSearchData: "+result.size());
         //搜索商品数据
         if (page == 1) {
             resultBeans = new ArrayList<>();
@@ -128,6 +128,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
         } else {
             rlv_Search.setVisibility(View.GONE);
             null_Search.setVisibility(View.VISIBLE);
+            //3s,返回主页
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -136,7 +137,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
                     rlv_Home.setVisibility(View.VISIBLE);
                     search_Home.getSearchEditContent().setText("");
                 }
-            },5000);
+            }, 3000);
         }
     }
 

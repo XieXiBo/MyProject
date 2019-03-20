@@ -61,24 +61,26 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
         if (viewHolder instanceof BannerViewHolder) {
             final List<BannerBean.ResultBean> result = myBanner.getResult();
-            ((BannerViewHolder) viewHolder).xBanner.setData(result, null);
-            ((BannerViewHolder) viewHolder).xBanner.loadImage(new XBanner.XBannerAdapter() {
-                @Override
-                public void loadBanner(XBanner banner, Object model, View view, int position) {
-                    BannerBean.ResultBean baner = (BannerBean.ResultBean) model;
-                    Glide.with(context).load(baner.getImageUrl()).into((ImageView) view);
-                    banner.setPageChangeDuration(1000);
-                }
-            });
-            //banner点击跳转
-            ((BannerViewHolder) viewHolder).xBanner.setOnItemClickListener(new XBanner.OnItemClickListener() {
-                @Override
-                public void onItemClick(XBanner banner, Object model, View view, int position) {
-                    Intent intent = new Intent(context,WebActivity.class);
-                    intent.putExtra("url",result.get(position).getJumpUrl());
-                    context.startActivity(intent);
-                }
-            });
+           if (result.size()!=0){
+               ((BannerViewHolder) viewHolder).xBanner.setData(result, null);
+               ((BannerViewHolder) viewHolder).xBanner.loadImage(new XBanner.XBannerAdapter() {
+                   @Override
+                   public void loadBanner(XBanner banner, Object model, View view, int position) {
+                       BannerBean.ResultBean baner = (BannerBean.ResultBean) model;
+                       Glide.with(context).load(baner.getImageUrl()).into((ImageView) view);
+                       banner.setPageChangeDuration(1000);
+                   }
+               });
+               //banner点击跳转
+               ((BannerViewHolder) viewHolder).xBanner.setOnItemClickListener(new XBanner.OnItemClickListener() {
+                   @Override
+                   public void onItemClick(XBanner banner, Object model, View view, int position) {
+                       Intent intent = new Intent(context,WebActivity.class);
+                       intent.putExtra("url",result.get(position).getJumpUrl());
+                       context.startActivity(intent);
+                   }
+               });
+           }
         }
         if (viewHolder instanceof RxxpViewHolder) {
             ((RxxpViewHolder) viewHolder).text.setText(result.getRxxp().getName());
