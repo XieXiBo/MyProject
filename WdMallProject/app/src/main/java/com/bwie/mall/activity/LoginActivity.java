@@ -3,7 +3,6 @@ package com.bwie.mall.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bwie.mall.R;
+import com.bwie.mall.bean.LoginBean;
 import com.bwie.mall.presenter.LoginPresenter;
 import com.bwie.mall.utils.TelUtils;
 import com.bwie.mall.view.LoginView;
@@ -40,6 +40,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @BindView(R.id.login_login)
     Button login;
     private SharedPreferences sp;
+
     @Override
     public int getActivityLayout() {
         return R.layout.activity_login;
@@ -119,12 +120,30 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                 Map<String, String> params = new HashMap<>();
                 params.put("phone", phone);
                 params.put("pwd", pwd);
+                presenter.sendParams(params);
             }
         });
     }
 
     @Override
-    public void getViewData() {
+    public void getViewData(LoginBean loginBean) {
+        // Log.i("xxx", "getViewData: "+loginBean);
+        if (loginBean != null) {
+            String status = loginBean.getStatus();
+            String message = loginBean.getMessage();
+            if (status.equals("0000")){
+                Toast.makeText(LoginActivity.this,message,Toast.LENGTH_SHORT).show();
+                LoginBean.ResultBean result = loginBean.getResult();
+                SharedPreferences.Editor edit = sp.edit();
+                edit.putString("headPic", result.getHeadPic());
+                edit.putString("nickName", result.getNickName());
+                edit.putString("sessionId", result.getSessionId());
+                edit.putString("userId", String.valueOf(result.getUserId()));
+                edit.commit();
+            }else{
+                Toast.makeText(LoginActivity.this,message,Toast.LENGTH_SHORT).show();
+            }
+        }
 
     }
 

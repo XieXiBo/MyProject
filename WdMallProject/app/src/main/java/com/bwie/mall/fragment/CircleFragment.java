@@ -7,7 +7,7 @@ import com.bwie.mall.R;
  * @Date: 2019/3/17 15:33:18
  * @Description:
  */
-public class CircleFragment extends BaseFragment{
+public class CircleFragment extends TBaseFragment{
     @Override
     public int getFragmentLayout() {
         return R.layout.fragment_circle;

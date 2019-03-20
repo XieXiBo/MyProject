@@ -3,6 +3,7 @@ package com.bwie.mall.utils;
 import android.util.Log;
 
 import com.bwie.mall.api.Api;
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -47,7 +48,7 @@ public class RetrofitUtils {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
-                Log.i("xxx", "log: " + message);
+                Log.i("lj", "log: " + message);
             }
         });
         //实例okhttp
@@ -69,6 +70,7 @@ public class RetrofitUtils {
                 .baseUrl(Api.BASE_URL)//域名接口
                 .client(getOkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
         return retrofit;
     }

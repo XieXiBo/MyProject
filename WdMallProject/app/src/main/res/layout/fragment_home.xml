@@ -1,123 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     android:orientation="vertical">
-<!--
-    <com.xxb.wdscproject.wiget.CustomSearch
-        android:id="@+id/search_group"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />-->
 
-   <!-- <android.support.v7.widget.RecyclerView
+    <com.bwie.mall.wiget.CustomSearch
+        android:id="@+id/search_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <!--主页展示-->
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/rlv_home"
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="wrap_content" />-->
-<!--
-
-    <ScrollView
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+    <!--搜索数据展示-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rlv_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:visibility="gone" />
+    <!--搜索商品无展示-->
+    <RelativeLayout
+        android:id="@+id/null_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/search_null_img"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_centerInParent="true"
+            android:src="@mipmap/search_null_img" />
 
-            <com.stx.xhb.xbanner.XBanner
-                android:id="@+id/xbanner"
-                android:layout_width="match_parent"
-                android:layout_height="260dp"
-                android:layout_gravity="center"
-                app:isClipChildrenMode="true" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="260dp"
-                android:layout_marginTop="10dp"
-                android:background="#fff"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="@mipmap/rxxp"
-                    android:gravity="center"
-                    android:text="热销新品"
-                    android:textColor="#ff7b00"
-                    android:textSize="16sp" />
-
-                <GridView
-                    android:id="@+id/rxxp_gv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:gravity="center"
-                    android:horizontalSpacing="10dp"
-                    android:numColumns="3"
-                    android:verticalSpacing="10dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_marginTop="10dp"
-                android:background="#fff"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="@mipmap/mlss"
-                    android:gravity="center"
-                    android:text="魔丽时尚"
-                    android:textColor="#ba58fc"
-                    android:textSize="16sp" />
-
-                <GridView
-                    android:id="@+id/mlss_gv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:gravity="center"
-                    android:verticalSpacing="10dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="480dp"
-                android:layout_marginTop="10dp"
-                android:background="#fff"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="@mipmap/pzsh"
-                    android:gravity="center"
-                    android:text="品质生活"
-                    android:textColor="#f92d45"
-                    android:textSize="16sp" />
-
-                <GridView
-                    android:id="@+id/pzsh_gv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:gravity="center"
-                    android:horizontalSpacing="10dp"
-                    android:numColumns="2"
-                    android:verticalSpacing="10dp" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
--->
-
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/search_null_img"
+            android:layout_centerHorizontal="true"
+            android:text="抱歉没有找到商品额~" />
+    </RelativeLayout>
 </LinearLayout>

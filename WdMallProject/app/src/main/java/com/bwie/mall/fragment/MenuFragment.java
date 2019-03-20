@@ -7,7 +7,7 @@ import com.bwie.mall.R;
  * @Date: 2019/3/17 15:33:18
  * @Description:
  */
-public class MenuFragment extends BaseFragment{
+public class MenuFragment extends TBaseFragment{
     @Override
     public int getFragmentLayout() {
         return R.layout.fragment_menu;

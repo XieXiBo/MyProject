@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.bwie.mall.presenter.BasePresenter;
 
+import butterknife.ButterKnife;
+
 /**
  * @Auther: xiexibo
  * @Date: 2019/3/12 19:48:00
@@ -19,6 +21,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         super.onCreate(savedInstanceState);
         //获取Ativity的View
         setContentView(getActivityLayout());
+        ButterKnife.bind(this);
         //初始化页面
         initView();
         //获取p层方法
