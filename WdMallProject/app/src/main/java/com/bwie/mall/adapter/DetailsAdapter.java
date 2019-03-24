@@ -71,10 +71,12 @@ public class DetailsAdapter extends ListBaseAdapter<DetailsBean> {
             FlyBanner flybanner = item.findViewById(R.id.detail_fly_banner);
             TextView detailName = item.findViewById(R.id.detail_name);
             TextView detailsKg = item.findViewById(R.id.details_kg);
+            TextView detailsPrice = item.findViewById(R.id.details_price);
             TextView detail_describe = item.findViewById(R.id.detail_describe);
             detail_describe.setText(detailsResult.getDescribe());
             detailName.setText(detailsResult.getCategoryName());
             detailsKg.setText(detailsResult.getWeight()+"kg");
+            detailsPrice.setText(detailsResult.getPrice()+"");
             for (int i = 0; i < 5; i++) {
                 list.add(detailsResult.getPicture().split(",")[i]);
             }

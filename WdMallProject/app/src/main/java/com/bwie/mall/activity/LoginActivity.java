@@ -16,6 +16,8 @@ import com.bwie.mall.presenter.LoginPresenter;
 import com.bwie.mall.utils.TelUtils;
 import com.bwie.mall.view.LoginView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -89,17 +91,17 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                 boolean mobileNO = TelUtils.isMobileNO(phone);
                 //非空判断格式判断
                 if (phone == null) {
-                    Toast.makeText(LoginActivity.this, "请输入手机号", Toast.LENGTH_SHORT);
+                    Toast.makeText(LoginActivity.this, "请输入手机号", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (pwd == null) {
-                    Toast.makeText(LoginActivity.this, "请输入登录密码", Toast.LENGTH_SHORT);
+                    Toast.makeText(LoginActivity.this, "请输入登录密码", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
                     if (!mobileNO) {
-                        Toast.makeText(LoginActivity.this, "手机号格式不对", Toast.LENGTH_SHORT);
+                        Toast.makeText(LoginActivity.this, "手机号格式不对", Toast.LENGTH_SHORT).show();
                         return;
                     } else if (pwd.length() < 3) {
-                        Toast.makeText(LoginActivity.this, "密码格式不对", Toast.LENGTH_SHORT);
+                        Toast.makeText(LoginActivity.this, "密码格式不对", Toast.LENGTH_SHORT).show();
                         return;
                     } else {
                         /**
@@ -140,6 +142,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                 edit.putString("sessionId", result.getSessionId());
                 edit.putString("userId", String.valueOf(result.getUserId()));
                 edit.commit();
+                //销毁
+                finish();
             }else{
                 Toast.makeText(LoginActivity.this,message,Toast.LENGTH_SHORT).show();
             }

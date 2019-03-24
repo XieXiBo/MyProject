@@ -1,8 +1,12 @@
 package com.bwie.mall.activity;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -13,11 +17,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.graphics.Color;
+import android.widget.Toast;
+
 import com.bwie.mall.R;
 import com.bwie.mall.adapter.DetailsAdapter;
 import com.bwie.mall.bean.DetailsBean;
+import com.bwie.mall.bean.QueryCartBean;
 import com.bwie.mall.bean.ShopDetails;
+import com.bwie.mall.bean.ShopQueryListBean;
+import com.bwie.mall.bean.SyncShopCarBean;
 import com.bwie.mall.presenter.DetailsPresenter;
 import com.bwie.mall.utils.DensityUtil;
 import com.bwie.mall.utils.StatusBarUtil;
@@ -27,6 +35,9 @@ import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,12 +81,17 @@ public class DetailsActivity extends BaseActivity<DetailsPresenter> implements D
     private int item2 = 0;
     private int item3 = 0;
     private LinearLayoutManager manager;
-    private DetailsPresenter detailsPresenter;
-    private String addId;
     private SharedPreferences preferences;
-    private int d;
-    private String sessionId;
     private Resources res;
+    private SharedPreferences sp_login;
+    private String sessionId;
+    private String userId;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sp_login = getSharedPreferences("login", Context.MODE_PRIVATE);
+    }
 
     @Override
     public int getActivityLayout() {
@@ -84,6 +100,7 @@ public class DetailsActivity extends BaseActivity<DetailsPresenter> implements D
 
     @Override
     public void initView() {
+
         EventBus.getDefault().register(this);
     }
 
@@ -106,6 +123,55 @@ public class DetailsActivity extends BaseActivity<DetailsPresenter> implements D
     public void initData() {
         //进行网络请求
         presenter.onRelated(commodityId);
+        setMyBgView();
+        getMyTitle();
+        //添加购物车按钮点击事件
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sessionId = sp_login.getString("sessionId", null);
+                userId = sp_login.getString("userId", null);
+                /**
+                 * 点击添加购物车按钮判断是否登录
+                 * 如若没登录
+                 * 弹框提示是否去登陆
+                 * 去登录：跳转到登录页面登录
+                 * 取消：
+                 */
+                if (TextUtils.isEmpty(sessionId) && TextUtils.isEmpty(userId)) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(DetailsActivity.this);
+                    builder.setTitle("提示!");
+                    builder.setMessage("登录后可添加商品到购物车");
+                    builder.setPositiveButton("去登录", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //跳转登录
+                            startActivity(new Intent(DetailsActivity.this, LoginActivity.class));
+                        }
+                    });
+                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    builder.show();
+                } else {
+                    //添加(同步)购物车方法
+                    //先查询
+                    queryCart(sessionId, userId);
+                    //Log.i("xxx", "onClick: else");
+                }
+            }
+        });
+    }
+
+    //查询购物车方法
+    private void queryCart(String sessionId, String userId) {
+        presenter.queryCart(sessionId, userId);
+    }
+
+
+    private void setMyBgView() {
 
         list = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
@@ -189,17 +255,16 @@ public class DetailsActivity extends BaseActivity<DetailsPresenter> implements D
                 }
             }
         });
-        getMyTitle();
     }
 
     private void getMyTitle() {
         res = getResources();
         StatusBarUtil.setTranslucentForImageView(this, 0, titleBar);
         left.setBackgroundResource(R.mipmap.back_b);
-//        right.setBackgroundResource(R.mipmap.add);
+        //right.setBackgroundResource(R.mipmap.add);
         right.setVisibility(View.GONE);
         icon.setVisibility(View.VISIBLE);
-        //        图片的高度-状态栏的高度
+        // 图片的高度-状态栏的高度
         mRecyclerFactor = (DensityUtil.dp2px(this, 180.0F) - DensityUtil.getStatusBarHeight(this));
 
         left.setOnClickListener(new View.OnClickListener() {
@@ -212,13 +277,87 @@ public class DetailsActivity extends BaseActivity<DetailsPresenter> implements D
 
     @Override
     public void getDetailsData(ShopDetails.ResultBean result) {
-       // Log.i("xxx", "getDetailsData: "+result.getCategoryId());
+        // Log.i("xxx", "getDetailsData: "+result.getCategoryId());
         //获取到请求成功集合进行赋值
-        if (result!=null){
+        if (result != null) {
             setAdapter(list, result);
         }
     }
 
+    @Override
+    public void getQueryCarData(QueryCartBean queryCartBean) {
+        List<QueryCartBean.ResultBean> result = queryCartBean.getResult();
+        //创建添加购物车的集合
+        List<ShopQueryListBean> listBeans = new ArrayList<>();
+        //拿到查询购物车的集合遍历数据添加到（添加购物车的集合）
+        if (result.size() != 0) {
+            for (int i = 0; i < result.size(); i++) {
+                listBeans.add(new ShopQueryListBean(result.get(i).getCommodityId(), result.get(i).getCount()));
+            }
+        } else {
+            listBeans.add(new ShopQueryListBean(Integer.parseInt(commodityId), 1));
+        }
+        addShopList(listBeans);
+    }
+
+    @Override
+    public void getSyncShopCar(SyncShopCarBean syncShopCarBean) {
+        if (syncShopCarBean != null) {
+            String status = syncShopCarBean.getStatus();
+            String message = syncShopCarBean.getMessage();
+            if (status.equals(0000)) {
+                Toast.makeText(DetailsActivity.this, message, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(DetailsActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void addShopList(List<ShopQueryListBean> list) {
+       /* String data = "[";
+        for (int i = 0; i < list.size(); i++) {
+            //判断如果加入商品的id和集合里有相同的就count+1
+            if (Integer.valueOf(commodityId) == list.get(i).getCommodityId()) {
+                int count = list.get(i).getCount();
+                count++;
+                list.get(i).setCount(count);
+                break;
+                //如果遍历完毕没有相同的商品，就把当前的商品加入到购物车
+            } else if (i == list.size() - 1) {
+                list.add(new ShopQueryListBean(Integer.valueOf(commodityId), 1));
+                break;
+            }
+        }
+        for (ShopQueryListBean bean : list) {
+            data += "{\"commodityId\":" + bean.getCommodityId() + ",\"count\":" + bean.getCount() + "},";
+        }
+        String substring = data.substring(0, data.length() - 1);
+        substring += "]";
+        HashMap<String, String> params = new HashMap<>();
+        params.put("data", substring);
+        presenter.getSyncShopCart(userId, sessionId, params);*/
+        try {
+            JSONArray jsonArray = new JSONArray();
+            for (int i = 0; i < list.size(); i++) {
+                if (Integer.valueOf(commodityId) == list.get(i).getCommodityId()) {
+                    int count = list.get(i).getCount();
+                    count++;
+                    list.get(i).setCount(count);
+                    //如果遍历完毕没有相同的商品，就把当前的商品加入到购物车
+                } else if (i == list.size() - 1) {
+                    list.add(new ShopQueryListBean(Integer.valueOf(commodityId), 1));
+                }
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("commodityId", list.get(i).getCommodityId());
+                jsonObject.put("count", list.get(i).getCount());
+                jsonArray.put(jsonObject);
+            }
+            String s = jsonArray.toString();
+            presenter.getSyncShopCart(userId, sessionId, s);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void setAdapter(List<DetailsBean> list, ShopDetails.ResultBean detailsResult) {
         lrecyclerView.setNestedScrollingEnabled(false);
@@ -247,8 +386,8 @@ public class DetailsActivity extends BaseActivity<DetailsPresenter> implements D
 
             }
         });
-
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -16,16 +16,23 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        //设置磁盘缓存
-        DiskCacheConfig diskCacheConfig =  DiskCacheConfig.newBuilder(this)
+        /**
+         * 设置磁盘缓存
+         */
+        DiskCacheConfig diskCacheConfig = DiskCacheConfig.newBuilder(this)
                 .setBaseDirectoryName("fresco_img")
                 .setBaseDirectoryPath(Environment.getExternalStorageDirectory())
                 .build();
-        //设置磁盘缓存的配置,生成配置文件
+        /**
+         * 设置磁盘缓存的配置,生成配置文件
+         */
         ImagePipelineConfig config = ImagePipelineConfig.newBuilder(this)
                 .setMainDiskCacheConfig(diskCacheConfig)
                 .build();
-        Fresco.initialize(this,config);
 
+        /**
+         * 初始化配置
+         */
+        Fresco.initialize(this, config);
     }
 }

@@ -18,12 +18,12 @@ import com.bwie.mall.bean.SearchBean;
 import com.bwie.mall.presenter.HomePresenter;
 import com.bwie.mall.view.HomeView;
 import com.bwie.mall.wiget.CustomSearch;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.Unbinder;
 
 /**
  * @Auther: xiexibo
@@ -36,10 +36,9 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
     @BindView(R.id.rlv_home)
     RecyclerView rlv_Home;
     @BindView(R.id.rlv_search)
-    RecyclerView rlv_Search;
+    XRecyclerView rlv_Search;
     @BindView(R.id.null_search)
     RelativeLayout null_Search;
-    Unbinder unbinder;
     private HomeAdapter homeAdapter;
     private GoodsBean.ResultBean goods;
     private BannerBean banner;
@@ -87,6 +86,33 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
                 }
             }
         });
+        if (rlv_Search.getVisibility()==View.VISIBLE){
+          rlv_Search.setLoadingListener(new XRecyclerView.LoadingListener() {
+              @Override
+              public void onRefresh() {
+                  page=1;
+                  presenter.onSearch(keyword,page);
+                  handler.postDelayed(new Runnable() {
+                      @Override
+                      public void run() {
+                          rlv_Search.refreshComplete();
+                      }
+                  },2000);
+              }
+
+              @Override
+              public void onLoadMore() {
+                  page++;
+                  presenter.onSearch(keyword,page);
+                  handler.postDelayed(new Runnable() {
+                      @Override
+                      public void run() {
+                          rlv_Search.loadMoreComplete();
+                      }
+                  },2000);
+              }
+          });
+        }
     }
 
     @Override
@@ -124,7 +150,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
             SearchAdapter myAdapter = new SearchAdapter(getActivity(), resultBeans);
             rlv_Search.setAdapter(myAdapter);
             //分页加载
-            // rlv.scrollToPosition(myAdapter.getItemCount() - result.size() - 1);
+            rlv_Search.scrollToPosition(myAdapter.getItemCount() - result.size() - 1);
         } else {
             rlv_Search.setVisibility(View.GONE);
             null_Search.setVisibility(View.VISIBLE);
@@ -142,8 +168,8 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    public void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacksAndMessages(null);
     }
 }

@@ -8,9 +8,10 @@ import java.lang.ref.WeakReference;
  * @Date: 2019/3/17 14:16:56
  * @Description:
  */
-public class BasePresenter<T> {
+public abstract class BasePresenter<T> {
 
     private Reference<T> tReference;
+
 
     /**
      * 弱引用控制外部类对象

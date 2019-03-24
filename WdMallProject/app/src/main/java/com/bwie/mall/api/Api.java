@@ -20,4 +20,10 @@ public class Api {
     public static final String SEARCH_URL = "small/commodity/v1/findCommodityByKeyword";
     //商品详情
     public static final String DETAILS_URL = "small/commodity/v1/findCommodityDetailsById";
+    //同步(添加)购物车
+    public static final String SYNC_SHOPCAR = "small/order/verify/v1/syncShoppingCart";
+    //查询
+    public static final String QUERY_SHOPCAR = "small/order/verify/v1/findShoppingCart";
+    //圈子列表展示
+    public static final String CIRCLE_LIST = "/small/circle/v1/findCircleList";
 }

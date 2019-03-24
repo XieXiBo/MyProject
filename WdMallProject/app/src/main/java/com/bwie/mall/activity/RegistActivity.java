@@ -1,5 +1,6 @@
 package com.bwie.mall.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -110,6 +111,8 @@ public class RegistActivity extends BaseActivity<RegistPresenter> implements Reg
              */
             if (status.equals("0000")) {
                 Toast.makeText(RegistActivity.this, message, Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(RegistActivity.this, LoginActivity.class));
+                finish();
             } else {
                 Toast.makeText(RegistActivity.this, message, Toast.LENGTH_SHORT).show();
             }
