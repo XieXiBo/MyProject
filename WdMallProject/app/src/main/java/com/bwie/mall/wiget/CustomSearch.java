@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import com.bwie.mall.R;
 
 import butterknife.BindView;
@@ -44,6 +43,7 @@ public class CustomSearch extends LinearLayout {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.search_custom, this);
         ButterKnife.bind(this);
+        //右侧（搜索）按钮
         searchTextBtu.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,12 +53,20 @@ public class CustomSearch extends LinearLayout {
                 }
             }
         });
+        //左侧（图片）按钮
+        searchLeftImg.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clickSearchImg != null) {
+                    clickSearchImg.onClickImg();
+                }
+            }
+        });
     }
 
     public CustomSearch(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
-
 
     public interface onClickSearchText {
         void onClickText(String text);
@@ -68,5 +76,15 @@ public class CustomSearch extends LinearLayout {
 
     public void setClickSearchText(onClickSearchText clickSearchText) {
         this.clickSearchText = clickSearchText;
+    }
+
+    public interface onClickSearchImg {
+        void onClickImg();
+    }
+
+    public onClickSearchImg clickSearchImg;
+
+    public void setClickSearchImg(onClickSearchImg clickSearchImg) {
+        this.clickSearchImg = clickSearchImg;
     }
 }

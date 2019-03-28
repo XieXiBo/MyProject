@@ -51,31 +51,31 @@ public class ShopDetails {
          * describe : 米黑,36码
          * details :
          * <div class="dc-img">
-         <div class="dc-img-detail">
-         <div class="img-6xx-bg">
-         <img src="http:http://a.vpimg4.com/upload/merchandise/pdcvis/112483/2017/1103/56/edb51370-f08c-4824-a993-3b65d59bdea5.jpg" class="J-mer-bigImg" data-original="http:http://a.vpimg4.com/upload/merchandise/pdcvis/112483/2017/1103/56/edb51370-f08c-4824-a993-3b65d59bdea5.jpg">
-         </div>
-         <div class="img-6xx-bg">
-         <img src="http:http://a.vpimg4.com/upload/merchandise/pdcvis/112483/2017/1103/93/a28dccfe-94b4-4ec6-b166-90bea38b71cd.jpg" class="J-mer-bigImg" data-original="http:http://a.vpimg4.com/upload/merchandise/pdcvis/112483/2017/1103/93/a28dccfe-94b4-4ec6-b166-90bea38b71cd.jpg">
-         </div>
-         <div class="img-6xx-bg">
-         <img src="http://s2.vipstatic.com/img/share/blank.png" class="lazy J-mer-bigImg" data-original="http:http://a.vpimg4.com/upload/merchandise/pdcvis/112483/2017/1103/134/f3b5efc8-eb82-4fd2-b96d-8a9c9e6b5764.jpg">
-         </div>
-         <div class="img-6xx-bg">
-         <img src="http://s2.vipstatic.com/img/share/blank.png" class="lazy J-mer-bigImg" data-original="http:http://a.vpimg4.com/upload/merchandise/pdcvis/112483/2017/1103/178/c7cd67ab-dc50-47ff-9429-0cd8304e00b4.jpg">
-         </div>
-         <div class="img-6xx-bg">
-         <img src="http://s2.vipstatic.com/img/share/blank.png" class="lazy J-mer-bigImg" data-original="http:http://a.vpimg4.com/upload/merchandise/pdcvis/112483/2017/1103/44/da28e7b3-1f73-4ad7-a2cd-036157835972.jpg">
-         </div>
-         <div class="img-6xx-bg">
-         <img src="http://s2.vipstatic.com/img/share/blank.png" class="lazy J-mer-bigImg" data-original="http:http://a.vpimg4.com/upload/merchandise/pdcvis/112483/2017/1103/136/592a43c9-6619-42d1-9dfa-ab855a0f4902.jpg">
-         </div>
-         </div>
-         <div class="dc-img-con">
-         </div>
-         <div class="dc-txt-con">
-         </div>
-         </div>
+         * <div class="dc-img-detail">
+         * <div class="img-6xx-bg">
+         * <img src="http:http://a.vpimg4.com/upload/merchandise/pdcvis/112483/2017/1103/56/edb51370-f08c-4824-a993-3b65d59bdea5.jpg" class="J-mer-bigImg" data-original="http:http://a.vpimg4.com/upload/merchandise/pdcvis/112483/2017/1103/56/edb51370-f08c-4824-a993-3b65d59bdea5.jpg">
+         * </div>
+         * <div class="img-6xx-bg">
+         * <img src="http:http://a.vpimg4.com/upload/merchandise/pdcvis/112483/2017/1103/93/a28dccfe-94b4-4ec6-b166-90bea38b71cd.jpg" class="J-mer-bigImg" data-original="http:http://a.vpimg4.com/upload/merchandise/pdcvis/112483/2017/1103/93/a28dccfe-94b4-4ec6-b166-90bea38b71cd.jpg">
+         * </div>
+         * <div class="img-6xx-bg">
+         * <img src="http://s2.vipstatic.com/img/share/blank.png" class="lazy J-mer-bigImg" data-original="http:http://a.vpimg4.com/upload/merchandise/pdcvis/112483/2017/1103/134/f3b5efc8-eb82-4fd2-b96d-8a9c9e6b5764.jpg">
+         * </div>
+         * <div class="img-6xx-bg">
+         * <img src="http://s2.vipstatic.com/img/share/blank.png" class="lazy J-mer-bigImg" data-original="http:http://a.vpimg4.com/upload/merchandise/pdcvis/112483/2017/1103/178/c7cd67ab-dc50-47ff-9429-0cd8304e00b4.jpg">
+         * </div>
+         * <div class="img-6xx-bg">
+         * <img src="http://s2.vipstatic.com/img/share/blank.png" class="lazy J-mer-bigImg" data-original="http:http://a.vpimg4.com/upload/merchandise/pdcvis/112483/2017/1103/44/da28e7b3-1f73-4ad7-a2cd-036157835972.jpg">
+         * </div>
+         * <div class="img-6xx-bg">
+         * <img src="http://s2.vipstatic.com/img/share/blank.png" class="lazy J-mer-bigImg" data-original="http:http://a.vpimg4.com/upload/merchandise/pdcvis/112483/2017/1103/136/592a43c9-6619-42d1-9dfa-ab855a0f4902.jpg">
+         * </div>
+         * </div>
+         * <div class="dc-img-con">
+         * </div>
+         * <div class="dc-txt-con">
+         * </div>
+         * </div>
          * picture : http://172.17.8.100/images/small/commodity/nx/bx/5/1.jpg,http://172.17.8.100/images/small/commodity/nx/bx/5/2.jpg,http://172.17.8.100/images/small/commodity/nx/bx/5/3.jpg,http://172.17.8.100/images/small/commodity/nx/bx/5/4.jpg,http://172.17.8.100/images/small/commodity/nx/bx/5/5.jpg
          * price : 119
          * saleNum : 0

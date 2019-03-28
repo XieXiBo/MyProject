@@ -26,11 +26,12 @@ import java.util.List;
 public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.MyViewHolder> {
     private Context context;
     private List<QueryCartBean.ResultBean> list;
+    private boolean flag;
 
-    public ShopCarAdapter(Context context, List<QueryCartBean.ResultBean> list) {
+    public ShopCarAdapter(Context context, List<QueryCartBean.ResultBean> list, boolean flag) {
         this.context = context;
         this.list = list;
-
+        this.flag = flag;
     }
 
     @NonNull
@@ -43,6 +44,10 @@ public class ShopCarAdapter extends RecyclerView.Adapter<ShopCarAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, final int i) {
+        //订单页标识，是订单也用适配器的话就隐藏所有复选框
+        if (flag){
+            myViewHolder.check_item.setVisibility(View.GONE);
+        }
         QueryCartBean.ResultBean resultBean = list.get(i);
         final int price = resultBean.getPrice();
         myViewHolder.title_item.setText(resultBean.getCommodityName());

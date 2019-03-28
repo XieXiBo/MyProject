@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="240dp"
-        android:background="@drawable/wode_shape"
+        android:background="@drawable/mine_fragment_shape"
         android:orientation="vertical">
 
         <LinearLayout

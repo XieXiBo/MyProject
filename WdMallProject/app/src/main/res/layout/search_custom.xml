@@ -21,7 +21,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_weight="1"
-        android:background="@drawable/search_shap"
+        android:background="@drawable/home_search_shap"
         android:lines="1" />
 
     <TextView

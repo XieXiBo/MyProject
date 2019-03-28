@@ -21,7 +21,6 @@ import com.bwie.mall.view.ShopCarView;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.Unbinder;
 
 /**
  * @Auther: xiexibo
@@ -42,12 +41,14 @@ public class ShopCarFragment extends BaseFragment<ShopCatPresenter> implements S
     private String sessionId;
     private ShopCarAdapter adapter;
     private List<QueryCartBean.ResultBean> result;
-
+    private boolean flag = false;
 
     @Override
     public void onResume() {
         super.onResume();
-
+        sp_login = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
+        sessionId = sp_login.getString("sessionId", null);
+        userId = sp_login.getString("userId", null);
         if (!TextUtils.isEmpty(sessionId) && !TextUtils.isEmpty(userId)) {
             presenter.onRelated(userId, sessionId);
         }
@@ -60,9 +61,7 @@ public class ShopCarFragment extends BaseFragment<ShopCatPresenter> implements S
 
     @Override
     public void initView() {
-        sp_login = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
-        sessionId = sp_login.getString("sessionId", null);
-        userId = sp_login.getString("userId", null);
+
         rlv_Shop.setLayoutManager(new LinearLayoutManager(getActivity()));
         rlv_Shop.addItemDecoration(new DividerItemDecoration(getActivity(), OrientationHelper.VERTICAL));
     }
@@ -96,41 +95,43 @@ public class ShopCarFragment extends BaseFragment<ShopCatPresenter> implements S
 
         if (queryCartBean != null) {
             result = queryCartBean.getResult();
-            adapter = new ShopCarAdapter(getActivity(), result);
-            rlv_Shop.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-            /**
-             * 商品数量改变,条目复选框点击 --> 回调监听
-             */
-            adapter.setCallbackListener(new ShopCarAdapter.onCallbackListener() {
-                @Override
-                public void callback(List<QueryCartBean.ResultBean> list) {
-                    double priceAll = 0;
-                    int num = 0;
-                    int totalNum = 0;
-                    //遍历集合根据状态改变总价格总数量
-                    for (int i = 0; i < list.size(); i++) {
-                        boolean ischeck = list.get(i).isIscheck();
-                        Log.i("xxx", "callback: "+ischeck);
-                        //存入所有商品数量
-                        totalNum+= list.get(i).getCount();
-                        //选中状态
-                        if (ischeck) {
-                            //存入当前商品（价钱*数量）
-                            priceAll += (list.get(i).getPrice() * list.get(i).getCount());
-                            //存入当前商品数量
-                            num += list.get(i).getCount();
+            if (result.size() != 0) {
+                adapter = new ShopCarAdapter(getActivity(), result, flag);
+                rlv_Shop.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                /**
+                 * 商品数量改变,条目复选框点击 --> 回调监听
+                 */
+                adapter.setCallbackListener(new ShopCarAdapter.onCallbackListener() {
+                    @Override
+                    public void callback(List<QueryCartBean.ResultBean> list) {
+                        double priceAll = 0;
+                        int num = 0;
+                        int totalNum = 0;
+                        //遍历集合根据状态改变总价格总数量
+                        for (int i = 0; i < list.size(); i++) {
+                            boolean ischeck = list.get(i).isIscheck();
+                           // Log.i("xxx", "callback: " + ischeck);
+                            //存入所有商品数量
+                            totalNum += list.get(i).getCount();
+                            //选中状态
+                            if (ischeck) {
+                                //存入当前商品（价钱*数量）
+                                priceAll += (list.get(i).getPrice() * list.get(i).getCount());
+                                //存入当前商品数量
+                                num += list.get(i).getCount();
+                            }
                         }
+                        if (num == totalNum) {
+                            shopBoxAll.setChecked(true);
+                        } else {
+                            shopBoxAll.setChecked(false);
+                        }
+                        shopTextAllprice.setText("" + priceAll);
+                        shopTextGo.setText("去结算(" + num + ")");
                     }
-                    if (num==totalNum){
-                        shopBoxAll.setChecked(true);
-                    }else{
-                        shopBoxAll.setChecked(false);
-                    }
-                    shopTextAllprice.setText("" + priceAll);
-                    shopTextGo.setText("去结算(" + num + ")");
-                }
-            });
+                });
+            }
         }
 
     }
@@ -142,14 +143,14 @@ public class ShopCarFragment extends BaseFragment<ShopCatPresenter> implements S
      */
     private void checkAll(boolean checked) {
 
-            double priceAll = 0.0;
-            int num = 0;
-            for (int i = 0; i < result.size(); i++) {
-                //修改商品的复选框
-                result.get(i).setIscheck(checked);
-                priceAll = priceAll + (result.get(i).getPrice() * result.get(i).getCount());
-                num = num + result.get(i).getCount();
-            }
+        double priceAll = 0.0;
+        int num = 0;
+        for (int i = 0; i < result.size(); i++) {
+            //修改商品的复选框
+            result.get(i).setIscheck(checked);
+            priceAll = priceAll + (result.get(i).getPrice() * result.get(i).getCount());
+            num = num + result.get(i).getCount();
+        }
         if (checked) {
             shopTextAllprice.setText("合计：" + priceAll);
             shopTextGo.setText("去结算(" + num + ")");

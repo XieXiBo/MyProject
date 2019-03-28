@@ -52,4 +52,5 @@ public class CircleModel {
     public void setCircleListener(onCircleListener circleListener) {
         this.circleListener = circleListener;
     }
+
 }

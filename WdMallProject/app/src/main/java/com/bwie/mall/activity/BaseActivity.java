@@ -46,5 +46,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         super.onDestroy();
         //清空弱引用对象
         presenter.deatchView();
+
     }
 }

@@ -3,7 +3,11 @@ package com.bwie.mall.api;
 import com.bwie.mall.bean.BannerBean;
 import com.bwie.mall.bean.CircleListBean;
 import com.bwie.mall.bean.GoodsBean;
+import com.bwie.mall.bean.InsertAddressBean;
 import com.bwie.mall.bean.LoginBean;
+import com.bwie.mall.bean.MineAddressBean;
+import com.bwie.mall.bean.MrAddressBean;
+import com.bwie.mall.bean.NewMenuBean;
 import com.bwie.mall.bean.QueryCartBean;
 import com.bwie.mall.bean.RegistBean;
 import com.bwie.mall.bean.SearchBean;
@@ -14,6 +18,7 @@ import java.util.Map;
 
 import io.reactivex.Flowable;
 import okhttp3.RequestBody;
+import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -85,6 +90,43 @@ public interface ApiService {
     @GET(Api.QUERY_SHOPCAR)
     Flowable<QueryCartBean> getQueryCart(@Header("userId") String userId, @Header("sessionId") String sessionId);
 
+    /**
+     * 圈子列表
+     */
     @GET(Api.CIRCLE_LIST)
     Flowable<CircleListBean> getCircle(@HeaderMap Map<String, String> params, @Query("count") int count, @Query("page") int page);
+
+    /**
+     * 查询收货地址列表
+     */
+    @GET(Api.ADDRESS_URL)
+    Flowable<MineAddressBean> getAddress(@Header("userId") String userId, @Header("sessionId") String sessionId);
+
+    /**
+     * 新增收货地址
+     */
+    @POST(Api.INSERT_ADDRESS)
+    @FormUrlEncoded
+    Flowable<InsertAddressBean> insertAddress(@Header("userId") String userId, @Header("sessionId") String sessionId, @FieldMap Map<String, String> params);
+
+    /**
+     * 默认收货地址
+     */
+    @POST(Api.MR_ADDRESS)
+    @FormUrlEncoded
+    Flowable<MrAddressBean> setMrAddress(@Header("userId") String userId, @Header("sessionId") String sessionId, @Field("id") int id);
+
+
+    /**
+     * 创建订单
+     */
+    @POST(Api.CREATE_MENU)
+    @FormUrlEncoded
+    Flowable<NewMenuBean> createMenu(@Header("userId") int userId, @Header("sessionId") String sessionId, @Field("orderInfo") String orderInfo, @Field("totalPrice") double sumPrice, @Field("addressId") int addressId);
+
+    /**
+     * 支付
+     */
+    @POST(Api.PAY_URL)
+    Flowable<SyncShopCarBean> goPay(@Header("userId") int userId, @Header("sessionId") String sessionId, @Query("orderId") String orderId,@Query("payType") int payType);
 }

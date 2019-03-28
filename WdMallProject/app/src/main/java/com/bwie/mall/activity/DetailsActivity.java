@@ -10,7 +10,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -81,11 +80,11 @@ public class DetailsActivity extends BaseActivity<DetailsPresenter> implements D
     private int item2 = 0;
     private int item3 = 0;
     private LinearLayoutManager manager;
-    private SharedPreferences preferences;
     private Resources res;
     private SharedPreferences sp_login;
     private String sessionId;
     private String userId;
+    private ShopDetails.ResultBean buyBean;
 
     @Override
     protected void onResume() {
@@ -160,6 +159,44 @@ public class DetailsActivity extends BaseActivity<DetailsPresenter> implements D
                     //先查询
                     queryCart(sessionId, userId);
                     //Log.i("xxx", "onClick: else");
+                }
+            }
+        });
+
+        //立刻购买
+        btnBuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sessionId = sp_login.getString("sessionId", null);
+                userId = sp_login.getString("userId", null);
+                /**
+                 * 点击添加购物车按钮判断是否登录
+                 * 如若没登录
+                 * 弹框提示是否去登陆
+                 * 去登录：跳转到登录页面登录
+                 * 取消：
+                 */
+                if (TextUtils.isEmpty(sessionId) && TextUtils.isEmpty(userId)) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(DetailsActivity.this);
+                    builder.setTitle("提示!");
+                    builder.setMessage("登录后可添加商品到购物车");
+                    builder.setPositiveButton("去登录", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //跳转登录
+                            startActivity(new Intent(DetailsActivity.this, LoginActivity.class));
+                        }
+                    });
+                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    builder.show();
+                } else {
+                    // EventBus传值buyBean
+                    EventBus.getDefault().postSticky(buyBean);
+                    startActivity(new Intent(DetailsActivity.this, NewMenuActivity.class));
                 }
             }
         });
@@ -280,6 +317,7 @@ public class DetailsActivity extends BaseActivity<DetailsPresenter> implements D
         // Log.i("xxx", "getDetailsData: "+result.getCategoryId());
         //获取到请求成功集合进行赋值
         if (result != null) {
+            buyBean = result;
             setAdapter(list, result);
         }
     }

@@ -45,12 +45,13 @@ public class QueryCartBean {
         private int price;
         private boolean ischeck=false;
 
-        public ResultBean(int commodityId, String commodityName, int count, String pic, int price) {
+        public ResultBean(int commodityId, String commodityName, int count, String pic, int price, boolean ischeck) {
             this.commodityId = commodityId;
             this.commodityName = commodityName;
             this.count = count;
             this.pic = pic;
             this.price = price;
+            this.ischeck=ischeck;
         }
 
         public ResultBean() {

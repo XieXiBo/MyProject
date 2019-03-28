@@ -1,7 +1,5 @@
 package com.bwie.mall.model;
 
-import android.util.Log;
-
 import com.bwie.mall.api.ApiService;
 import com.bwie.mall.bean.QueryCartBean;
 import com.bwie.mall.bean.ShopDetails;
@@ -20,7 +18,7 @@ import okhttp3.RequestBody;
  * @Description:
  */
 public class DetailsModel {
-//详情展示
+    //详情展示
     public void getHttpData(String commodityId) {
         ApiService apiService = RetrofitUtils.getInstance().setCreate(ApiService.class);
         apiService.getDetails(commodityId)
@@ -47,7 +45,8 @@ public class DetailsModel {
                     }
                 });
     }
-//出现购物车
+
+    //出现购物车
     public void getQueryCart(String sessionId, String userId) {
         ApiService apiService = RetrofitUtils.getInstance().setCreate(ApiService.class);
         apiService.getQueryCart(userId, sessionId)
@@ -83,18 +82,18 @@ public class DetailsModel {
      * @param data
      */
     public void getSyncShopCart(String userId, String sessionId, String data) {
-       // Log.i("xxx", "getSyncShopCart: userId" + userId + "sessionId" + sessionId + params);
+        // Log.i("xxx", "getSyncShopCart: userId" + userId + "sessionId" + sessionId + params);
 
         ApiService apiService = RetrofitUtils.getInstance().setCreate(ApiService.class);
 
-        apiService.getSyncShopCar(Integer.parseInt(userId), sessionId,  RequestBody.create(MediaType.parse("text/plain"),data))
+        apiService.getSyncShopCar(Integer.parseInt(userId), sessionId, RequestBody.create(MediaType.parse("text/plain"), data))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSubscriber<SyncShopCarBean>() {
                     @Override
                     public void onNext(SyncShopCarBean syncShopCarBean) {
-                       // Log.i("xxx", "onNext: " + syncShopCarBean.getStatus());
-                        if (syncShopCarListener!=null){
+                        // Log.i("xxx", "onNext: " + syncShopCarBean.getStatus());
+                        if (syncShopCarListener != null) {
 
                             syncShopCarListener.onResult(syncShopCarBean);
                         }
@@ -132,12 +131,14 @@ public class DetailsModel {
         this.queryCarListener = queryCarListener;
     }
 
-    public interface onSyncShopCarListener{
+    public interface onSyncShopCarListener {
         void onResult(SyncShopCarBean syncShopCarBean);
     }
+
     public onSyncShopCarListener syncShopCarListener;
 
     public void setSyncShopCarListener(onSyncShopCarListener syncShopCarListener) {
         this.syncShopCarListener = syncShopCarListener;
     }
+
 }

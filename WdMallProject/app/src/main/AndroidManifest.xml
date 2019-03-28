@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.ShowActivity">
+        <activity
+            android:name=".activity.ShowActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,6 +25,10 @@
         <activity android:name=".activity.RegistActivity" />
         <activity android:name=".activity.WebActivity" />
         <activity android:name=".activity.DetailsActivity" />
+        <activity android:name=".activity.MineAddressActivity" />
+        <activity android:name=".activity.InsterAddressActivity" />
+        <activity android:name=".activity.NewMenuActivity" />
+        <activity android:name=".activity.PayActivity" />
     </application>
 
 </manifest>

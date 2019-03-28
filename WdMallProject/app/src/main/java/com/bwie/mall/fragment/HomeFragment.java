@@ -83,6 +83,9 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeVie
                     presenter.onSearch(keyword, page);
                 } else {
                     Toast.makeText(getActivity(), "输入您要搜索的商品", Toast.LENGTH_SHORT).show();
+                    rlv_Search.setVisibility(View.GONE);
+                    null_Search.setVisibility(View.GONE);
+                    rlv_Home.setVisibility(View.VISIBLE);
                 }
             }
         });

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardBackgroundColor="#FFF"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp">
+
+            <TextView
+                android:id="@+id/name_item_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="张三"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/phone_item_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="15672168371"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/address_item_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name_item_address"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="北京市 海淀区 上地七街 中关村软件园"
+                android:textSize="15sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:background="#c6c1c1"
+                android:layout_height="1dp"
+                android:layout_below="@id/address_item_address" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/address_item_address"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp">
+
+                <CheckBox
+                    android:id="@+id/item_mr_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="设为默认地址" />
+
+                <TextView
+                    android:id="@+id/item_delete_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/goods_shape"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="删除" />
+
+                <TextView
+                    android:id="@+id/item_update_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/item_delete_address"
+                    android:background="@drawable/goods_shape"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="编辑" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

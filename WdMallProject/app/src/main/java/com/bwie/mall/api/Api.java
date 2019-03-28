@@ -25,5 +25,16 @@ public class Api {
     //查询
     public static final String QUERY_SHOPCAR = "small/order/verify/v1/findShoppingCart";
     //圈子列表展示
-    public static final String CIRCLE_LIST = "/small/circle/v1/findCircleList";
+    public static final String CIRCLE_LIST = "small/circle/v1/findCircleList";
+    //地址列表
+    public static final String ADDRESS_URL = "small/user/verify/v1/receiveAddressList";
+    //新增地址
+    public static final String INSERT_ADDRESS = "small/user/verify/v1/addReceiveAddress";
+    //默认收货地址
+    public static final String MR_ADDRESS = "small/user/verify/v1/setDefaultReceiveAddress";
+    //创建订单
+    public static final String CREATE_MENU = "small/order/verify/v1/createOrder";
+    //支付
+    public static final String PAY_URL = "small/order/verify/v1/pay";
+
 }
