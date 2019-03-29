@@ -2,6 +2,7 @@ package com.bwie.mall.api;
 
 import com.bwie.mall.bean.BannerBean;
 import com.bwie.mall.bean.CircleListBean;
+import com.bwie.mall.bean.FirstCategory;
 import com.bwie.mall.bean.GoodsBean;
 import com.bwie.mall.bean.InsertAddressBean;
 import com.bwie.mall.bean.LoginBean;
@@ -11,8 +12,10 @@ import com.bwie.mall.bean.NewMenuBean;
 import com.bwie.mall.bean.QueryCartBean;
 import com.bwie.mall.bean.RegistBean;
 import com.bwie.mall.bean.SearchBean;
+import com.bwie.mall.bean.SelectBillBean;
 import com.bwie.mall.bean.ShopDetails;
 import com.bwie.mall.bean.SyncShopCarBean;
+import com.bwie.mall.bean.UserWallet;
 
 import java.util.Map;
 
@@ -128,5 +131,30 @@ public interface ApiService {
      * 支付
      */
     @POST(Api.PAY_URL)
-    Flowable<SyncShopCarBean> goPay(@Header("userId") int userId, @Header("sessionId") String sessionId, @Query("orderId") String orderId,@Query("payType") int payType);
+    Flowable<SyncShopCarBean> goPay(@Header("userId") int userId, @Header("sessionId") String sessionId, @Query("orderId") String orderId, @Query("payType") int payType);
+
+    /**
+     * 一级分类
+     */
+    @GET(Api.FIRST_URL)
+    Flowable<FirstCategory> getFirst();
+
+    /**
+     * 二级分类
+     */
+    @GET(Api.SECOND_URL)
+    Flowable<UserWallet> getSecond(@Query("firstCategoryId") String firstCategoryId);
+
+    /**
+     * 来自二级分类
+     */
+    @GET(Api.FORM_SECOND)
+    Flowable<SearchBean> getFormSecond(@Query("categoryId") String categoryId, @Query("page") int page, @Query("count") int count);
+
+    /**
+     * 来自二级分类
+     */
+    @GET(Api.MENU_STATE)
+    Flowable<SelectBillBean> getMenuState(@HeaderMap Map<String, String> map, @Query("status") int status, @Query("page") int page, @Query("count") int count);
+
 }

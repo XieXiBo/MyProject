@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.widget.RadioGroup;
 
 import com.bwie.mall.R;
@@ -46,6 +47,7 @@ public class ShowActivity extends AppCompatActivity {
     }
 
     private void initview() {
+
         //控件
         radioGroup = findViewById(R.id.radiogroup_main);
         //实例化对象
@@ -62,8 +64,16 @@ public class ShowActivity extends AppCompatActivity {
         transaction.add(R.id.fragment_main, shopCarFragment);
         transaction.add(R.id.fragment_main, menuFragment);
         transaction.add(R.id.fragment_main, mineFragment);
-        //控制显示隐藏
-        transaction.show(homeFragment).hide(circleFragment).hide(shopCarFragment).hide(menuFragment).hide(mineFragment).commit();
+        String codePay = getIntent().getStringExtra("codePay");
+        /*if (!TextUtils.isEmpty(codePay)) {
+            if (codePay.equals("1")) {
+                radioGroup.check(R.id.radio4_main);
+                transaction.show(menuFragment).hide(circleFragment).hide(shopCarFragment).hide(homeFragment).hide(mineFragment).commit();
+            }
+        } else {
+            //控制显示隐藏*/
+            transaction.show(homeFragment).hide(circleFragment).hide(shopCarFragment).hide(menuFragment).hide(mineFragment).commit();
+
         //按钮切换
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

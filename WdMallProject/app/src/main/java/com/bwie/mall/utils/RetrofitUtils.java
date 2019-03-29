@@ -3,6 +3,7 @@ package com.bwie.mall.utils;
 import android.util.Log;
 
 import com.bwie.mall.api.Api;
+import com.google.gson.Gson;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.util.concurrent.TimeUnit;
@@ -69,7 +70,7 @@ public class RetrofitUtils {
         retrofit = new Retrofit.Builder()
                 .baseUrl(Api.BASE_URL)//域名接口
                 .client(getOkHttpClient())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(new Gson()))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
         return retrofit;

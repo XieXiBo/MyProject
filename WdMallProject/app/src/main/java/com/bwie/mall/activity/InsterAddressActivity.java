@@ -73,19 +73,25 @@ public class InsterAddressActivity extends BaseActivity<InsertAddressPresenter> 
 
     @Override
     public void initData() {
-
+        city_Insert.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    initCityPicker();
+                    //隐藏软键盘
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(city_Insert.getWindowToken(), 0); //强制隐藏键盘
+                    cityPicker.show();
+                }
+                hasFocus = !hasFocus;
+            }
+        });
     }
 
-    @OnClick({R.id.city_insert, R.id.save_insert})
+    @OnClick({R.id.save_insert})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.city_insert:
-                initCityPicker();
-                //隐藏软键盘
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0); //强制隐藏键盘
-                cityPicker.show();
-                break;
+
             case R.id.save_insert:
                 checkout();
                 if (flag) {
@@ -105,7 +111,7 @@ public class InsterAddressActivity extends BaseActivity<InsertAddressPresenter> 
             if (status.equals("0000")) {
                 Toast.makeText(InsterAddressActivity.this, message, Toast.LENGTH_SHORT).show();
                 finish();
-            }else{
+            } else {
                 Toast.makeText(InsterAddressActivity.this, message, Toast.LENGTH_SHORT).show();
             }
         }

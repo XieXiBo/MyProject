@@ -34,6 +34,23 @@ public class CircleFragment extends BaseFragment<CirclePresenter> implements Cir
 
     private Handler handler = new Handler();
     private List<CircleListBean.ResultBean> list;
+    private SharedPreferences sp_login;
+    private String sessionId;
+    private String userId;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        sp_login = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
+        sessionId = sp_login.getString("sessionId", null);
+        userId = sp_login.getString("userId", null);
+        params = new HashMap<>();
+        params.put("userId", userId);
+        params.put("sessionId", sessionId);
+        if (!params.isEmpty()) {
+            presenter.onRelated(params, count, page);
+        }
+    }
 
     @Override
     public int getFragmentLayout() {
@@ -43,9 +60,6 @@ public class CircleFragment extends BaseFragment<CirclePresenter> implements Cir
     @Override
     public void initView() {
         xrlvCircle.setLayoutManager(new LinearLayoutManager(getActivity()));
-        SharedPreferences sp_login = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
-        String sessionId = sp_login.getString("sessionId", null);
-        String userId = sp_login.getString("userId", null);
         params = new HashMap<>();
         params.put("userId", userId);
         params.put("sessionId", sessionId);

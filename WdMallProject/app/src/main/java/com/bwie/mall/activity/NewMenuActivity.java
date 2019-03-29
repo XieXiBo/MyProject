@@ -3,10 +3,12 @@ package com.bwie.mall.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * @Auther: xiexibo
@@ -49,6 +52,8 @@ public class NewMenuActivity extends BaseActivity<NewMenuPresenter> implements N
     Button checkMatchAddress;
     @BindView(R.id.submit_menu)
     TextView submitMenu;
+    @BindView(R.id.back_newmenu)
+    ImageView backNewmenu;
     private SharedPreferences sp_login;
     private String sessionId;
     private String userId;
@@ -97,6 +102,13 @@ public class NewMenuActivity extends BaseActivity<NewMenuPresenter> implements N
 
             }
         });
+
+        backNewmenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -106,15 +118,22 @@ public class NewMenuActivity extends BaseActivity<NewMenuPresenter> implements N
     }
 
 
-    //接受传过来的商品信息
+    //接受详情页面传过来的商品信息
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void getEventBus(ShopDetails.ResultBean buyBean) {
-
+    public void getEventBus1(ShopDetails.ResultBean buyBean) {
+        resultBeans.clear();
         String[] split = buyBean.getPicture().split(",");
         resultBeans.add(new QueryCartBean.ResultBean(buyBean.getCommodityId(), buyBean.getCommodityName(), 1, split[0], buyBean.getPrice(), true));
 
     }
 
+    //接受详情页面传过来的商品信息
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void getEventBus2(List<QueryCartBean.ResultBean> buyBean) {
+        resultBeans.clear();
+        resultBeans.addAll(buyBean);
+        //Log.i("xxx", "getEventBus2: "+resultBeans.toString());
+    }
 
     @Override
     public void initData() {
@@ -186,9 +205,10 @@ public class NewMenuActivity extends BaseActivity<NewMenuPresenter> implements N
             if (status.equals("0000")) {
                 Toast.makeText(NewMenuActivity.this, message, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(NewMenuActivity.this, PayActivity.class);
-                intent.putExtra("orderId", orderId+"");
-                intent.putExtra("sumPrice", sumPrice+"");
+                intent.putExtra("orderId", orderId + "");
+                intent.putExtra("sumPrice", sumPrice + "");
                 startActivity(intent);
+                finish();
             } else {
                 Toast.makeText(NewMenuActivity.this, message, Toast.LENGTH_SHORT).show();
             }
@@ -217,5 +237,12 @@ public class NewMenuActivity extends BaseActivity<NewMenuPresenter> implements N
             addressAdapter = new MineAddressAdapter(NewMenuActivity.this, list);
             rlx1Newmune.setAdapter(addressAdapter);
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

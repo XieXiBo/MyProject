@@ -76,6 +76,13 @@ public class GroupLayout extends LinearLayout implements View.OnClickListener {
 
     }
 
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
 
     public void setData(ShopCarAdapter shopCarAdapter, List<QueryCartBean.ResultBean> list, int i) {
         this.list = list;

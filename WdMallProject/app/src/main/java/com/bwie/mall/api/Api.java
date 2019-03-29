@@ -36,5 +36,13 @@ public class Api {
     public static final String CREATE_MENU = "small/order/verify/v1/createOrder";
     //支付
     public static final String PAY_URL = "small/order/verify/v1/pay";
+    //一级分类
+    public static final String FIRST_URL = "small/commodity/v1/findFirstCategory";
+    //二级分类
+    public static final String SECOND_URL = "small/commodity/v1/findSecondCategory";
+    //根据二级分类查询子商品
+    public static final String FORM_SECOND = "small/commodity/v1/findCommodityByCategory";
+    //根据订单状态查询
+    public static final String MENU_STATE = "small/order/verify/v1/findOrderListByStatus";
 
 }

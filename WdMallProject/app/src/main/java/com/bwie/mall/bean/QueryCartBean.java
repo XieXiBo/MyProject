@@ -9,6 +9,15 @@ import java.util.List;
  * @Description:
  */
 public class QueryCartBean {
+    @Override
+    public String toString() {
+        return "QueryCartBean{" +
+                "message='" + message + '\'' +
+                ", status='" + status + '\'' +
+                ", result=" + result +
+                '}';
+    }
+
     private String message;
     private String status;
     private List<ResultBean> result;
@@ -44,6 +53,11 @@ public class QueryCartBean {
         private String pic;
         private int price;
         private boolean ischeck=false;
+
+        public ResultBean(int commodityId, int count) {
+            this.commodityId = commodityId;
+            this.count = count;
+        }
 
         public ResultBean(int commodityId, String commodityName, int count, String pic, int price, boolean ischeck) {
             this.commodityId = commodityId;

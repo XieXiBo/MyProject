@@ -41,15 +41,5 @@ public class HomePresenter extends BasePresenter<HomeView> {
         });
     }
 
-    //根据搜索参数请求数据
-    public void onSearch(String keyword, int page) {
-        homeModel.getSearch( keyword,  page);
 
-        homeModel.setSearchResult(new HomeModel.onSearchResult() {
-            @Override
-            public void onResult(List<SearchBean.ResultBean> result) {
-                homeView.getSearchData(result);
-            }
-        });
-    }
 }

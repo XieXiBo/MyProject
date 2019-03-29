@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardElevation="5dp"
+        app:cardCornerRadius="10dp"
+        app:contentPadding="10dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/text"
+                android:text="订单号"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/bill_fragment_orderId"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/text"
+                android:text="WD20180930884324"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="2018-09-30"
+                android:id="@+id/bill_fragment_createtime"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <android.support.v7.widget.RecyclerView
+                android:layout_below="@id/text"
+                android:id="@+id/bill_fragment_item_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+            <RelativeLayout
+                android:id="@+id/relative1"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/bill_fragment_item_recyclerview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginLeft="20dp"
+                    android:id="@+id/text1"
+                    android:text="共"
+                    android:layout_centerVertical="true"
+                    android:textSize="20sp"
+                    android:textColor="#666666"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/bill_fragment_count"
+                    android:layout_toRightOf="@id/text1"
+                    android:text="x"
+                    android:layout_centerVertical="true"
+                    android:textSize="20sp"
+                    android:textColor="#f00"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/text2"
+                    android:text="件商品,需付款"
+                    android:textSize="20sp"
+                    android:textColor="#666666"
+                    android:layout_toRightOf="@id/bill_fragment_count"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/bill_fragment_price"
+                    android:layout_toRightOf="@id/text2"
+                    android:text="x"
+                    android:layout_centerVertical="true"
+                    android:textSize="20sp"
+                    android:textColor="#f00"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="元"
+                    android:textSize="20sp"
+                    android:textColor="#666666"
+                    android:layout_toRightOf="@id/bill_fragment_price"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <Button
+                android:layout_below="@id/relative1"
+                android:id="@+id/bill_fragment_pay"
+                android:background="@drawable/button_shape"
+                android:text="去支付"
+                android:textSize="15sp"
+                android:textColor="#fff"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+                android:layout_below="@id/relative1"
+                android:background="@drawable/button_shape"
+                android:text="取消订单"
+                android:textSize="15sp"
+                android:textColor="#696969"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>

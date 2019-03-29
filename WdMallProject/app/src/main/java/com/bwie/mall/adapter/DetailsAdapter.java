@@ -77,7 +77,8 @@ public class DetailsAdapter extends ListBaseAdapter<DetailsBean> {
             detailName.setText(detailsResult.getCategoryName());
             detailsKg.setText(detailsResult.getWeight()+"kg");
             detailsPrice.setText(detailsResult.getPrice()+"");
-            for (int i = 0; i < 5; i++) {
+            String picture = detailsResult.getPicture();
+            for (int i = 0; i < 4; i++) {
                 list.add(detailsResult.getPicture().split(",")[i]);
             }
             flybanner.setImagesUrl(list);

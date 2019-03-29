@@ -16,5 +16,4 @@ public interface HomeView {
 
     void getShowData(GoodsBean.ResultBean result);
 
-    void getSearchData(List<SearchBean.ResultBean> result);
 }

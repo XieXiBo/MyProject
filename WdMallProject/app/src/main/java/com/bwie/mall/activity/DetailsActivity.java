@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -30,13 +31,11 @@ import com.bwie.mall.utils.DensityUtil;
 import com.bwie.mall.utils.StatusBarUtil;
 import com.bwie.mall.view.DetailsView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
+import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -170,7 +169,7 @@ public class DetailsActivity extends BaseActivity<DetailsPresenter> implements D
                 sessionId = sp_login.getString("sessionId", null);
                 userId = sp_login.getString("userId", null);
                 /**
-                 * 点击添加购物车按钮判断是否登录
+                 * 点击立刻购买按钮判断是否登录
                  * 如若没登录
                  * 弹框提示是否去登陆
                  * 去登录：跳转到登录页面登录
@@ -325,10 +324,29 @@ public class DetailsActivity extends BaseActivity<DetailsPresenter> implements D
     @Override
     public void getQueryCarData(QueryCartBean queryCartBean) {
         List<QueryCartBean.ResultBean> result = queryCartBean.getResult();
+        // Log.i("xxx", "getQueryCarData: "+result.toString());
         //创建添加购物车的集合
         List<ShopQueryListBean> listBeans = new ArrayList<>();
         //拿到查询购物车的集合遍历数据添加到（添加购物车的集合）
         if (result.size() != 0) {
+            /**
+             * 先遍历修改对应的数量
+             */
+            for (int i = 0; i < result.size(); i++) {
+                if (Integer.valueOf(commodityId) == result.get(i).getCommodityId()) {
+                    int count = result.get(i).getCount();
+                    count++;
+                    result.get(i).setCount(count);
+                    //如果遍历完毕没有相同的商品，就把当前的商品加入到购物车
+                    break;
+                } else if (result.size() - 1 == i) {
+                    result.add(new QueryCartBean.ResultBean(Integer.parseInt(commodityId), 1));
+                    break;
+                }
+            }
+            /**
+             * 在遍历到同步购物车集合
+             */
             for (int i = 0; i < result.size(); i++) {
                 listBeans.add(new ShopQueryListBean(result.get(i).getCommodityId(), result.get(i).getCount()));
             }
@@ -351,50 +369,15 @@ public class DetailsActivity extends BaseActivity<DetailsPresenter> implements D
         }
     }
 
+    /**
+     * 同步购物车方法
+     *
+     * @param list
+     */
     private void addShopList(List<ShopQueryListBean> list) {
-       /* String data = "[";
-        for (int i = 0; i < list.size(); i++) {
-            //判断如果加入商品的id和集合里有相同的就count+1
-            if (Integer.valueOf(commodityId) == list.get(i).getCommodityId()) {
-                int count = list.get(i).getCount();
-                count++;
-                list.get(i).setCount(count);
-                break;
-                //如果遍历完毕没有相同的商品，就把当前的商品加入到购物车
-            } else if (i == list.size() - 1) {
-                list.add(new ShopQueryListBean(Integer.valueOf(commodityId), 1));
-                break;
-            }
-        }
-        for (ShopQueryListBean bean : list) {
-            data += "{\"commodityId\":" + bean.getCommodityId() + ",\"count\":" + bean.getCount() + "},";
-        }
-        String substring = data.substring(0, data.length() - 1);
-        substring += "]";
-        HashMap<String, String> params = new HashMap<>();
-        params.put("data", substring);
-        presenter.getSyncShopCart(userId, sessionId, params);*/
-        try {
-            JSONArray jsonArray = new JSONArray();
-            for (int i = 0; i < list.size(); i++) {
-                if (Integer.valueOf(commodityId) == list.get(i).getCommodityId()) {
-                    int count = list.get(i).getCount();
-                    count++;
-                    list.get(i).setCount(count);
-                    //如果遍历完毕没有相同的商品，就把当前的商品加入到购物车
-                } else if (i == list.size() - 1) {
-                    list.add(new ShopQueryListBean(Integer.valueOf(commodityId), 1));
-                }
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("commodityId", list.get(i).getCommodityId());
-                jsonObject.put("count", list.get(i).getCount());
-                jsonArray.put(jsonObject);
-            }
-            String s = jsonArray.toString();
-            presenter.getSyncShopCart(userId, sessionId, s);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        String s = new Gson().toJson(list);
+       // Log.i("xxx", "addShopList: " + s);
+        presenter.getSyncShopCart(userId, sessionId, s);
     }
 
     private void setAdapter(List<DetailsBean> list, ShopDetails.ResultBean detailsResult) {

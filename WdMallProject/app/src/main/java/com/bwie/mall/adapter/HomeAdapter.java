@@ -60,7 +60,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int i) {
         if (viewHolder instanceof BannerViewHolder) {
-            final List<BannerBean.ResultBean> result = myBanner.getResult();
+           final List<BannerBean.ResultBean> result = myBanner.getResult();
            if (result.size()!=0){
                ((BannerViewHolder) viewHolder).xBanner.setData(result, null);
                ((BannerViewHolder) viewHolder).xBanner.loadImage(new XBanner.XBannerAdapter() {

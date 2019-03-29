@@ -93,6 +93,10 @@ public class PayActivity extends BaseActivity<PayPresenter> implements PayView {
             String status = syncShopCarBean.getStatus();
             if (status.equals("0000")) {
                 Toast.makeText(PayActivity.this, message, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(PayActivity.this, ShowActivity.class);
+                intent.putExtra("codePay","1");
+                startActivity(intent);
+                finish();
             } else {
                 Toast.makeText(PayActivity.this, message, Toast.LENGTH_SHORT).show();
             }

@@ -62,6 +62,14 @@ public class CustomSearch extends LinearLayout {
                 }
             }
         });
+        searchEditContent.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clickSearchEdit != null) {
+                    clickSearchEdit.onResult();
+                }
+            }
+        });
     }
 
     public CustomSearch(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -86,5 +94,15 @@ public class CustomSearch extends LinearLayout {
 
     public void setClickSearchImg(onClickSearchImg clickSearchImg) {
         this.clickSearchImg = clickSearchImg;
+    }
+
+    public interface onClickSearchEdit {
+        void onResult();
+    }
+
+    public onClickSearchEdit clickSearchEdit;
+
+    public void setOnClickSearchEdit(CustomSearch.onClickSearchEdit clickSearchEdit) {
+        this.clickSearchEdit = clickSearchEdit;
     }
 }

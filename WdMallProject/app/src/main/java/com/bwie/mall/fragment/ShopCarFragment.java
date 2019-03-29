@@ -1,23 +1,28 @@
 package com.bwie.mall.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bwie.mall.R;
+import com.bwie.mall.activity.NewMenuActivity;
 import com.bwie.mall.adapter.ShopCarAdapter;
 import com.bwie.mall.bean.QueryCartBean;
 import com.bwie.mall.presenter.ShopCatPresenter;
 import com.bwie.mall.view.ShopCarView;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -42,6 +47,10 @@ public class ShopCarFragment extends BaseFragment<ShopCatPresenter> implements S
     private ShopCarAdapter adapter;
     private List<QueryCartBean.ResultBean> result;
     private boolean flag = false;
+    private double priceAll;
+    private int num;
+    //传到订单页面用的集合
+    private List<QueryCartBean.ResultBean> goMenulist = new ArrayList<>();
 
     @Override
     public void onResume() {
@@ -87,6 +96,34 @@ public class ShopCarFragment extends BaseFragment<ShopCatPresenter> implements S
                 adapter.notifyDataSetChanged();
             }
         });
+        /**
+         * 去结算点击事件
+         */
+        shopTextGo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int num = 0;
+                //   Log.i("xxx", "onClick: "+goMenulist.toString());
+                List<QueryCartBean.ResultBean> resultBeans = new ArrayList<>();
+                for (int i = 0; i < goMenulist.size(); i++) {
+                    //选中的商品进行传值给订单页面
+                    boolean ischeck = goMenulist.get(i).isIscheck();
+                    if (ischeck) {
+                        num++;
+                        resultBeans.add(goMenulist.get(i));
+                    }
+                }
+                if (num == 0) {
+                    Toast.makeText(getActivity(), "您还没有选择宝贝哦", Toast.LENGTH_SHORT).show();
+                } else {
+                    //遍历选中的商品进行传值
+                    EventBus.getDefault().postSticky(resultBeans);
+                    startActivity(new Intent(getActivity(), NewMenuActivity.class));
+                    getActivity().finish();
+                }
+
+            }
+        });
     }
 
 
@@ -95,6 +132,8 @@ public class ShopCarFragment extends BaseFragment<ShopCatPresenter> implements S
 
         if (queryCartBean != null) {
             result = queryCartBean.getResult();
+            goMenulist.clear();
+            goMenulist.addAll(result);
             if (result.size() != 0) {
                 adapter = new ShopCarAdapter(getActivity(), result, flag);
                 rlv_Shop.setAdapter(adapter);
@@ -105,13 +144,17 @@ public class ShopCarFragment extends BaseFragment<ShopCatPresenter> implements S
                 adapter.setCallbackListener(new ShopCarAdapter.onCallbackListener() {
                     @Override
                     public void callback(List<QueryCartBean.ResultBean> list) {
-                        double priceAll = 0;
-                        int num = 0;
+                        goMenulist.clear();
+                        //集合改变重写赋值
+                        goMenulist.addAll(list);
+
+                        priceAll = 0;
+                        num = 0;
                         int totalNum = 0;
                         //遍历集合根据状态改变总价格总数量
                         for (int i = 0; i < list.size(); i++) {
                             boolean ischeck = list.get(i).isIscheck();
-                           // Log.i("xxx", "callback: " + ischeck);
+                            // Log.i("xxx", "callback: " + ischeck);
                             //存入所有商品数量
                             totalNum += list.get(i).getCount();
                             //选中状态
@@ -143,8 +186,8 @@ public class ShopCarFragment extends BaseFragment<ShopCatPresenter> implements S
      */
     private void checkAll(boolean checked) {
 
-        double priceAll = 0.0;
-        int num = 0;
+        priceAll = 0.0;
+        num = 0;
         for (int i = 0; i < result.size(); i++) {
             //修改商品的复选框
             result.get(i).setIscheck(checked);
