@@ -44,5 +44,11 @@ public class Api {
     public static final String FORM_SECOND = "small/commodity/v1/findCommodityByCategory";
     //根据订单状态查询
     public static final String MENU_STATE = "small/order/verify/v1/findOrderListByStatus";
+    //根据用户ID查询用户信息
+    public static final String MINE_INFO = "small/user/verify/v1/getUserById";
+    //查询用户钱包
+    public static final String MINE_WALLET= "small/user/verify/v1/findUserWallet";
+    //我的足迹
+    public static final String MINE_FOOT= "small/commodity/verify/v1/browseList";
 
 }

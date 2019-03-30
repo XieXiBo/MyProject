@@ -19,9 +19,9 @@ import okhttp3.RequestBody;
  */
 public class DetailsModel {
     //详情展示
-    public void getHttpData(String commodityId) {
+    public void getHttpData(String userId, String sessionId, String commodityId) {
         ApiService apiService = RetrofitUtils.getInstance().setCreate(ApiService.class);
-        apiService.getDetails(commodityId)
+        apiService.getDetails(userId, sessionId, commodityId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSubscriber<ShopDetails>() {

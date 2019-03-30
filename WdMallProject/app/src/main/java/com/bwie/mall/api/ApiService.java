@@ -7,6 +7,9 @@ import com.bwie.mall.bean.GoodsBean;
 import com.bwie.mall.bean.InsertAddressBean;
 import com.bwie.mall.bean.LoginBean;
 import com.bwie.mall.bean.MineAddressBean;
+import com.bwie.mall.bean.MineFootBean;
+import com.bwie.mall.bean.MineInfoBean;
+import com.bwie.mall.bean.MineWalletBean;
 import com.bwie.mall.bean.MrAddressBean;
 import com.bwie.mall.bean.NewMenuBean;
 import com.bwie.mall.bean.QueryCartBean;
@@ -75,7 +78,7 @@ public interface ApiService {
      * 商品详情
      */
     @GET(Api.DETAILS_URL)
-    Flowable<ShopDetails> getDetails(@Query("commodityId") String commodityId);
+    Flowable<ShopDetails> getDetails(@Header("userId") String userId, @Header("sessionId") String sessionId, @Query("commodityId") String commodityId);
 
     /**
      * 同步购物车
@@ -156,5 +159,23 @@ public interface ApiService {
      */
     @GET(Api.MENU_STATE)
     Flowable<SelectBillBean> getMenuState(@HeaderMap Map<String, String> map, @Query("status") int status, @Query("page") int page, @Query("count") int count);
+
+    /**
+     * 根据用户ID查询用户信息
+     */
+    @GET(Api.MINE_INFO)
+    Flowable<MineInfoBean> getMineInfo(@Header("userId") String userId, @Header("sessionId") String sessionId);
+
+    /**
+     * 查询用户钱包
+     */
+    @GET(Api.MINE_WALLET)
+    Flowable<MineWalletBean> getWallet(@Header("userId") String userId, @Header("sessionId") String sessionId, @Query("page") int page, @Query("count") int count);
+
+    /**
+     * 我的足迹
+     */
+    @GET(Api.MINE_FOOT)
+    Flowable<MineFootBean> getFoot(@Header("userId") String userId, @Header("sessionId") String sessionId, @Query("page") int page, @Query("count") int count);
 
 }

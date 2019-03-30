@@ -28,7 +28,7 @@ public class MenuModel {
                 .subscribeWith(new DisposableSubscriber<SelectBillBean>() {
                     @Override
                     public void onNext(SelectBillBean selectBillBean) {
-                        Log.i("xxx", "onNext: " + selectBillBean.getMessage());
+                       // Log.i("xxx", "onNext: " + selectBillBean.getMessage());
                         if (menuStateLinstener != null) {
                             menuStateLinstener.onResult(selectBillBean);
                         }

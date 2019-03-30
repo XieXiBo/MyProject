@@ -30,6 +30,10 @@
         <activity android:name=".activity.NewMenuActivity" />
         <activity android:name=".activity.PayActivity" />
         <activity android:name=".activity.SortActivity" />
+        <activity android:name=".activity.MineInfoActivity" />
+        <activity android:name=".activity.MineCircleActivity" />
+        <activity android:name=".activity.MineWalletActivity" />
+        <activity android:name=".activity.MineFootActivity" />
     </application>
 
 </manifest>

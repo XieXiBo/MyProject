@@ -63,7 +63,7 @@ public class SearchAdapter extends RecyclerView.Adapter {
                 //EventBus传值
                 int commodityId = list.get(i).getCommodityId();
                 if (commodityId!=0){
-                    EventBus.getDefault().postSticky(Integer.parseInt(commodityId+""));
+                    EventBus.getDefault().postSticky(commodityId+"");
                     //获取值跳转
                     context.startActivity(new Intent(context,DetailsActivity.class));
                 }

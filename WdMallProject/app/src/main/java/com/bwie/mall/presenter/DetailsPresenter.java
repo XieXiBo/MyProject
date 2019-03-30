@@ -24,8 +24,8 @@ public class DetailsPresenter extends BasePresenter<DetailsView> {
         detailsModel = new DetailsModel();
     }
 
-    public void onRelated(String commodityId) {
-        detailsModel.getHttpData(commodityId);
+    public void onRelated(String userId, String sessionId, String commodityId) {
+        detailsModel.getHttpData(userId,sessionId,commodityId);
 
         detailsModel.setDetailsListener(new DetailsModel.onDetailsListener() {
             @Override

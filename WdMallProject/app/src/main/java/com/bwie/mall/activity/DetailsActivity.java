@@ -86,12 +86,6 @@ public class DetailsActivity extends BaseActivity<DetailsPresenter> implements D
     private ShopDetails.ResultBean buyBean;
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        sp_login = getSharedPreferences("login", Context.MODE_PRIVATE);
-    }
-
-    @Override
     public int getActivityLayout() {
         return R.layout.activity_details;
     }
@@ -110,7 +104,7 @@ public class DetailsActivity extends BaseActivity<DetailsPresenter> implements D
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void getEventBusData(String id) {
-        //Log.i("xxx", "getEventBusData: " + id);
+      //  Log.i("xxx", "getEventBusData: " + id);
         if (!TextUtils.isEmpty(id)) {
             //参数不为空赋值
             commodityId = id;
@@ -119,8 +113,17 @@ public class DetailsActivity extends BaseActivity<DetailsPresenter> implements D
 
     @Override
     public void initData() {
+        sp_login = getSharedPreferences("login", Context.MODE_PRIVATE);
+        sessionId = sp_login.getString("sessionId", null);
+        userId = sp_login.getString("userId", null);
         //进行网络请求
-        presenter.onRelated(commodityId);
+        if (TextUtils.isEmpty(userId) && TextUtils.isEmpty(sessionId)) {
+            presenter.onRelated(null, null, commodityId);
+           // Log.i("xxx", "initData: 未登录");
+        } else {
+            presenter.onRelated(userId, sessionId, commodityId);
+          //  Log.i("xxx", "initData: 登录");
+        }
         setMyBgView();
         getMyTitle();
         //添加购物车按钮点击事件
@@ -376,7 +379,7 @@ public class DetailsActivity extends BaseActivity<DetailsPresenter> implements D
      */
     private void addShopList(List<ShopQueryListBean> list) {
         String s = new Gson().toJson(list);
-       // Log.i("xxx", "addShopList: " + s);
+        // Log.i("xxx", "addShopList: " + s);
         presenter.getSyncShopCart(userId, sessionId, s);
     }
 
